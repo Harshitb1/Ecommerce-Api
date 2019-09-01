@@ -3,9 +3,7 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const ReferManagerSchema = new Schema({
-  redeem_time:{
-    type: Number,
-  },
+
   redeem_amount:{
       type : Number,
   },
@@ -15,4 +13,4 @@ const ReferManagerSchema = new Schema({
   }
 });
 
-module.exports = Post = mongoose.model('refermanager', ReferManagerSchema);
+module.exports = ReferManager = mongoose.model('refermanager', ReferManagerSchema);

@@ -82,6 +82,13 @@ const UserSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'users'
       },
+      referral_payment:{
+        type: String,
+        default:"pending"
+      },
+      referral_amount:{
+        type: Number
+      },
       date: {
         type: Date,
         default: Date.now        
