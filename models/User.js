@@ -45,20 +45,11 @@ const UserSchema = new Schema({
       ref: 'orders'
     }
   }],
-  subscription:[{
-    name:{
-      type: String
-    },
-    price:{
-      type:Number
-    },
-    validity:{
-      type:Date
-    },
-    date:{
-      type: Date,
-      default: Date.now
-    }
+  subscriptions:[{
+      subscription:{
+        type: Schema.Types.ObjectId,
+        ref: 'subscriptions'
+      }
   }],
   messages:[
     {

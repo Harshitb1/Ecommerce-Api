@@ -660,6 +660,7 @@ function random(low, high, name) {
 router.post("/register", async (req, res) => {
   User.findOne({ phone: req.body.phone }).then(user => {
     if (user) {
+      
       return res.status(400).json("phone no. already exists");
     } else {
       const newUser = new User({
@@ -671,11 +672,12 @@ router.post("/register", async (req, res) => {
         pincode: req.body.pincode,
         age: req.body.age,
         address: req.body.address,
-
-
         refer_code: req.body.phone
-      })
-        .save()
+      });
+      if (typeof req.body.referred_code!= 'undefined'){
+        newUser.referred_code = referred_code;
+      }
+        newUser.save()
         .then(user => res.json(user))
         .catch(err => {
           console.log(err);
@@ -752,62 +754,64 @@ router.get(
 
 router.get("/all", (req, res) => {
   User.find()
-    .sort({ date: -1 })
+    .sort({ joining_date: -1 })
 
     .then(users => res.json(users))
     .catch(err => res.status(404).json({ nousersfound: "No users found" }));
 });
 
-router.get("/refer-manager", async (req, res) => {
-  var allUsers = await User.find()
-    .sort({ joining_date: -1 })
-    .exec()
-    .then(users => {
-      return users;
-    })
-    .catch(err => res.json("Some Error occured or no user found"));
+// router.get("/refer-manager", async (req, res) => {
+//   var allUsers = await User.find()
+//     .sort({ joining_date: -1 })
+//     .exec()
+//     .then(users => {
+//       return users;
+//     })
+//     .catch(err => res.json("Some Error occured or no user found"));
 
-  referred = [];
+//   referred = [];
 
-  allUsers.forEach(user => {
-    if (user.referred_code) {
-      referred.push(user);
-    }
-  });
+//   allUsers.forEach(user => {
+//     if (user.referred_code) {
+//       referred.push(user);
+//     }
+//   });
 
-  var list = [];
-  await forEach(referred, async (user, index) => {
-    var referreduser = await User.find({ refer_code: user.referred_code })
-      .sort({ joining_date: -1 })
-      .then(user => {
-        return user;
-      })
-      .catch(err => {
-        res.json(
-          "There seems to be discrepancy in data, user has successfully applied a refer code , but no user exist for that refer code  " +
-            user.referred_code
-        );
-      });
+//   var list = [];
+//   await forEach(referred, async (user, index) => {
+//     var referreduser = await User.find({ refer_code: user.referred_code })
+//       .sort({ joining_date: -1 })
+//       .then(user => {
+//         return user;
+//       })
+//       .catch(err => {
+//         res.json(
+//           "There seems to be discrepancy in data, user has successfully applied a refer code , but no user exist for that refer code  " +
+//             user.referred_code
+//         );
+//       });
 
-    var total = 0;
+//     var total = 0;
 
-    user.credit_history.forEach(history => {
-      total += history.amount;
-    });
-    user.total_earning = total;
-    var obj = {
-      user,
-      referredUserId: referreduser[0]._id,
-      referredUserName: referreduser[0].name,
-      referredUserPhone: referreduser[0].phone
-    };
-    list.push(obj);
+//     user.credit_history.forEach(history => {
+//       total += history.amount;
+//     });
+//     user.total_earning = total;
+//     var obj = {
+//       user,
+//       referredUserId: referreduser[0]._id,
+//       referredUserName: referreduser[0].name,
+//       referredUserPhone: referreduser[0].phone
+//     };
+//     list.push(obj);
 
-    if (index == referred.length - 1) {
-      res.json(list);
-    }
-  });
-});
+//     if (index == referred.length - 1) {
+//       res.json(list);
+//     }
+//   });
+// });
+
+
 ///:start_date/:end_date
 router.get("/datewise/:start_date/:end_date", (req, res) => {
   // console.log("@@@@@")

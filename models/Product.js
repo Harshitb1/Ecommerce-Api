@@ -16,20 +16,15 @@ const ProductSchema = new Schema({
         type: Number
     },
     reviews:[{
-        name:{
-            type: String
-        },
-        date:{
-            type: Date,
-            default: Date.now
-        },
-        rating:{
-            type: Number
-        },
-        desc:{
-            type: String
-        }
+        id:{
+            type: Schema.Types.ObjectId,
+            ref: 'reviews'
+          }
     }],
+    sales_count:{
+        type: Number,
+        default:0
+    },
     date: {
         type: Date,
         default: Date.now
