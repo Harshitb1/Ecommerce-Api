@@ -695,28 +695,28 @@ router.post(
   }
 );
 
-router.get("/fav-news/:id", (req, res) => {
-  var allnews = [];
-  User.findById(req.params.id).then(user => {
-    async.each(
-      user.favourites,
-      (fav, cb) => {
-        News.findById(fav.news)
-          .then(news => {
-            allnews.unshift(news);
-            cb();
-          })
-          .catch(err => cb(err));
-      },
-      err => {
-        if (err) {
-          res.status(400).json("error occured");
-          console.log(err);
-        } else res.json(allnews);
-      }
-    );
-  });
-});
+// router.get("/fav-news/:id", (req, res) => {
+//   var allnews = [];
+//   User.findById(req.params.id).then(user => {
+//     async.each(
+//       user.favourites,
+//       (fav, cb) => {
+//         News.findById(fav.news)
+//           .then(news => {
+//             allnews.unshift(news);
+//             cb();
+//           })
+//           .catch(err => cb(err));
+//       },
+//       err => {
+//         if (err) {
+//           res.status(400).json("error occured");
+//           console.log(err);
+//         } else res.json(allnews);
+//       }
+//     );
+//   });
+// });
 
 router.get("/:id/redeem", async (req, res) => {
   var price = 0;

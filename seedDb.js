@@ -1,6 +1,6 @@
 var mongoose = require("mongoose"),
     User = require("./models/User"),
-    News = require("./models/News"),
+    // News = require("./models/News"),s
     Employ = require("./models/Employ")
     ReferManager = require("./models/ReferManager")
 

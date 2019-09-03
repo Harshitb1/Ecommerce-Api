@@ -3,13 +3,16 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 
+const coupon = require('./routes/api/coupon');
+const dashboard = require('./routes/api/dashboard');
+const order = require('./routes/api/order');
+const products = require('./routes/api/products');
+const reviews = require('./routes/api/reviews');
+const subscriptions = require('./routes/api/subscriptions');
 const users = require('./routes/api/users');
-const news = require('./routes/api/news');
-const employs = require('./routes/api/employs');
-const categories = require('./routes/api/categories');
+// const employs = require('./routes/api/employs');
 // const cities = require('./routes/api/cities');
 // const states = require('./routes/api/states');
-const dashboard = require('./routes/api/dashboard');
 
 const seeddb = require('./seedDb');
 const app = express();
@@ -37,10 +40,14 @@ require('./config/passport')(passport);
 
 // Use Routes
 app.use('/api/users', users);
-app.use('/api/news', news);
+app.use('/api/products', products);
 app.use('/api/dashboard', dashboard);
-app.use('/api/employs',employs);
-app.use('/api/categories',categories);
+// app.use('/api/employs',employs);
+app.use('/api/coupon',coupon);
+app.use('/api/order',order);
+app.use('/api/reviews',reviews);
+app.use('/api/subbscriptions',subscriptions);
+
 // app.use('/api/cities',cities);
 // app.use('/api/states',states);
 

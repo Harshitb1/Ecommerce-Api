@@ -8,7 +8,7 @@ const { forEach } = require('p-iteration');
 
 
 // Load User Model
-const News = require('../../models/News');
+// const News = require('../../models/News');
 const User = require('../../models/User');
 const ReferManager = require('../../models/ReferManager');
 
@@ -153,30 +153,30 @@ router.get('/top-withdrawal',middleware.checkToken, async (req,res)=>{
 
 })
 
-router.get('/news-today',middleware.checkToken,async (req,res)=>{
-     var d = new Date().getDate();
-     var m = new Date().getMonth();
-     var y = new Date().getFullYear();
-     var news= await News.find({"date": {"$gte": new Date(y, m,d)}})
-     res.json(news);
-})
+// router.get('/news-today',middleware.checkToken,async (req,res)=>{
+//      var d = new Date().getDate();
+//      var m = new Date().getMonth();
+//      var y = new Date().getFullYear();
+//      var news= await News.find({"date": {"$gte": new Date(y, m,d)}})
+//      res.json(news);
+// })
 
-router.get('/news-month',middleware.checkToken, async (req,res)=>{
-    var d = new Date().getDate();
-    var m = new Date().getMonth();
-    var y = new Date().getFullYear();
-    var news= await News.find({"date": {"$gte": new Date(y, m,0)}})
-    res.json(news);
-})
+// router.get('/news-month',middleware.checkToken, async (req,res)=>{
+//     var d = new Date().getDate();
+//     var m = new Date().getMonth();
+//     var y = new Date().getFullYear();
+//     var news= await News.find({"date": {"$gte": new Date(y, m,0)}})
+//     res.json(news);
+// })
 
 
-router.get('/top-news',middleware.checkToken, async (req,res)=>{
-    var topNews =  await News.find()
-    .sort({ views: -1 }).exec().then(news => {return news})
-    .catch(err=> res.json("Some Error occured or no news found"));
+// router.get('/top-news',middleware.checkToken, async (req,res)=>{
+//     var topNews =  await News.find()
+//     .sort({ views: -1 }).exec().then(news => {return news})
+//     .catch(err=> res.json("Some Error occured or no news found"));
 
-    res.json(topNews);
-})
+//     res.json(topNews);
+// })
 
 router.get('/earnings-recent',middleware.checkToken, async (req,res)=>{
     var allUsers =  await User.find()

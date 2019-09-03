@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const middleware = require("../../middleware/index");
-const Coupon = require('../../models/Coupon');
+const Order = require('../../models/Order');
 // const News = require('../../models/News');
 
 
@@ -12,7 +12,7 @@ const Coupon = require('../../models/Coupon');
 //     console.log(category)
 // })
 router.get("/all",(req,res)=>{
-    Coupon.find()
+    Order.find()
      .sort({date: -1})
      .exec()
      .then(data=>{
@@ -25,39 +25,50 @@ router.get("/all",(req,res)=>{
 
 
 
-router.post("/add", (req,res)=>{
-    Coupon.findOne({name: req.body.name}).then(cat=>{
-        if(cat){
-            res.status(401).status("this coupon is already present")
-        }else {
-            var coupon = new Coupon({
-                name: req.body.name,
-                percentage: req.body.percentage,
-                max_amount: req.body.max_amount,
-                category: req.body.category
+router.post("/create", (req,res)=>{
+    // Order.findOne({name: req.body.name}).then(cat=>{
+    //     if(cat){
+    //         res.status(401).status("this coupon is already present")
+    //     }else {
+            var order = new Order({
+                product_id: req.body.product_id,
+                address: req.body.address,
+                amount: req.body.amount,
+                coupon: req.body.coupon,
+                cashback: req.body.cashback,
+                user: req.body.user
+                // category: req.body.category
             });
             
-            coupon.save()
-             .then(coupon=> res.json(coupon))
+            order.save()
+             .then(order=> res.json(order))
              .catch(err=> res.json(err));
         
-        }
-    })
+        // }
+    // })
     
 })
 
-router.post("/disable/:id",(req,res)=>{
-    Coupon.findById(req.params.id).then(coupon=>{
-        if(!coupon){
-            res.status(404).json("NO Coupon found")
-        }else{
-            coupon.active= false;
-            coupon.save().then(updated=>{
-                res.json(updated)
-            }).catch(err=>{
-                res.json(err)
-            })
-        }
+// router.post("/disable/:id",(req,res)=>{
+//     Coupon.findById(req.params.id).then(coupon=>{
+//         if(!coupon){
+//             res.status(404).json("NO Coupon found")
+//         }else{
+//             coupon.active= false;
+//             coupon.save().then(updated=>{
+//                 res.json(updated)
+//             }).catch(err=>{
+//                 res.json(err)
+//             })
+//         }
+//     }).catch(err=>{
+//         res.json(err)
+//     })
+// })
+
+router.get("/:id",(req,res)=>{
+    Order.findById(req.params.id).then(order=>{
+        res.json(order);
     }).catch(err=>{
         res.json(err)
     })

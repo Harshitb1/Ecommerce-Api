@@ -27,4 +27,4 @@ const CouponSchema = new Schema({
     }]
 });
 
-module.exports = Review = mongoose.model('reviews',ReviewSchema);
+module.exports = Coupon = mongoose.model('coupons',CouponSchema);
