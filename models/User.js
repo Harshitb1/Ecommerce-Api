@@ -40,10 +40,10 @@ const UserSchema = new Schema({
   },
 
   orders:[{
-    order_id:{
+   
       type: Schema.Types.ObjectId,
       ref: 'orders'
-    }
+    
   }],
   subscriptions:[{
       subscription:{
@@ -126,4 +126,5 @@ const UserSchema = new Schema({
   
 });
 
+// UserSchema.plugin(require('mongoose-autopopulate'));
 module.exports = User = mongoose.model('users', UserSchema);

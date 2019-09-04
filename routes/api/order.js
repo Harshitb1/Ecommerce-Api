@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const middleware = require("../../middleware/index");
 const Order = require('../../models/Order');
+const mongoose = require('mongoose');
+
 // const News = require('../../models/News');
 
 
@@ -42,9 +44,27 @@ router.post("/create", (req,res)=>{
             if(typeof req.body.coupon!= 'undefined'){
                 order.coupon= req.body.coupon
             }
+            console.log(new mongoose.Types.ObjectId(order._id))
             order.save()
-             .then(order=> res.json(order))
-             .catch(err=> res.json(err));
+             .then(order=> {
+                //  res.json(order)
+                User.findByIdAndUpdate(
+                    req.body.user,
+                    {$push: {"orders":  new mongoose.Types.ObjectId(order._id)}},
+                    {safe: true, upsert: true, new : true},
+                    function(err, news) {
+                      if(err){
+                        console.log(err);
+                        res.json("error while updating user")
+                      }
+                      else {
+                        // console.log(news)
+                        res.json(news)
+                      }
+                    }
+                );
+             })
+             .catch(err=> { console.log(err); res.json(err)});
         
         // }
     // })

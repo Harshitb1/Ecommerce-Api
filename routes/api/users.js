@@ -1248,6 +1248,7 @@ router.get("/:id/refer-time", async (req, res) => {
 // @access  Public
 router.get("/:id", (req, res) => {
   User.findById(req.params.id)
+  .populate("orders")
     .then(user => res.json(user))
     .catch(err =>
       res.status(404).json({ nouserfound: "No user found with that ID" })
