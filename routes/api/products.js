@@ -89,7 +89,7 @@ router.post('/update/:id', middleware.checkToken,async (req, res) => {
 // @desc    Create news
 // @access  Private
 router.post(
-  '/add',middleware.checkToken,
+  '/add',
   (req, res) => {
     // const { errors, isValid } = validateProfileInput(req.body);
 
@@ -109,8 +109,8 @@ router.post(
           name: req.body.name,
           description: req.body.description,
           image: req.body.image,
-          price: req.body.price,
-          added_by: req.body.added_by
+          price: req.body.price
+          // added_by: req.body.added_by
           // tags: req.body.tags,
           // category: req.body.category,
           // isTop: req.body.isTop

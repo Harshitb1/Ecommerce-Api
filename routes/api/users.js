@@ -131,6 +131,52 @@ router.get("/all", (req, res) => {
     .catch(err => res.status(404).json({ nousersfound: "No users found" }));
 });
 
+
+
+router.get("/effective-customers", (req, res) => {
+  // console.log("@@@@@")
+  // console.log(req.params.start_date)
+  // console.log(req.params.end_date)
+
+  // User.aggregate(
+  //   [
+  //     {
+  //       $match: {
+  //         orders: {
+  //           // $gt:null
+  //           $exists: true
+  //           // $gt: { $size: "$referred-code" , 1}
+  //         }
+
+  //         // name : "ekta"
+  //       }
+  //     },
+  //     {
+  //       $group: {
+  //         _id: "$name",
+  //         count: {
+  //           $sum: 1
+  //         }
+  //       }
+  //     },
+  //     {
+  //       // $sort: { "_id.year": -1, "_id.month": -1, "_id.day": -1 }
+  //     }
+  //   ],
+  //   (error, groupedData) => {
+  //     if (error) {
+  //       res.json(error);
+  //     } else {
+  //       res.json(groupedData);
+  //     }
+  //   }
+  // );
+
+  User.find({'orders.1': {$exists: true}}).then(found=>{
+    res.json(found)
+  })
+
+});
 // router.get("/refer-manager", async (req, res) => {
 //   var allUsers = await User.find()
 //     .sort({ joining_date: -1 })

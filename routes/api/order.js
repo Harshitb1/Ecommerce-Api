@@ -34,12 +34,14 @@ router.post("/create", (req,res)=>{
                 product_id: req.body.product_id,
                 address: req.body.address,
                 amount: req.body.amount,
-                coupon: req.body.coupon,
-                cashback: req.body.cashback,
+                // coupon: req.body.coupon,
+                cashback: req.body.cashback||0,
                 user: req.body.user
                 // category: req.body.category
             });
-            
+            if(typeof req.body.coupon!= 'undefined'){
+                order.coupon= req.body.coupon
+            }
             order.save()
              .then(order=> res.json(order))
              .catch(err=> res.json(err));
