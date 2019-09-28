@@ -32,10 +32,16 @@ router.post("/create", (req,res)=>{
     //     if(cat){
     //         res.status(401).status("this coupon is already present")
     //     }else {
+        // console.log(req.body.product_id)
+        // var d = req.body.product_id.map(item=>{
+        //     return new mongoose.Types.ObjectId(item._id)
+        // })
+        // console.log(d)
             var order = new Order({
                 product_id: req.body.product_id,
                 address: req.body.address,
                 amount: req.body.amount,
+                quantity: req.body.quantity||1,
                 // coupon: req.body.coupon,
                 cashback: req.body.cashback||0,
                 user: req.body.user
@@ -44,7 +50,7 @@ router.post("/create", (req,res)=>{
             if(typeof req.body.coupon!= 'undefined'){
                 order.coupon= req.body.coupon
             }
-            console.log(new mongoose.Types.ObjectId(order._id))
+            // console.log(new mongoose.Types.ObjectId(order._id))
             order.save()
              .then(order=> {
                 //  res.json(order)

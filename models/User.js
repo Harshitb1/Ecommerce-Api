@@ -45,11 +45,26 @@ const UserSchema = new Schema({
       ref: 'orders'
     
   }],
+  // subscriptions:[{
+  //     subscription:{
+  //       type: Schema.Types.ObjectId,
+  //       ref: 'subscriptions'
+  //     }
+  // }],
   subscriptions:[{
-      subscription:{
-        type: Schema.Types.ObjectId,
-        ref: 'subscriptions'
-      }
+    name:{
+      type: String
+    },
+    price:{
+      type:Number
+    },
+    validity:{
+      type:Date
+    },
+    date:{
+      type: Date,
+      default: Date.now
+    }
   }],
   messages:[
     {
@@ -82,7 +97,7 @@ const UserSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'users'
       },
-      referral_payment:{
+      referral_payment_status:{
         type: String,
         default:"pending"
       },

@@ -31,14 +31,12 @@ router.post("/add", (req,res)=>{
              .then(subscription=> res.json(subscription))
              .catch(err=> res.json(err));
         
-     
-    
 })
 
 router.get("/:id",(req,res)=>{
     Subscription.findById(req.params.id).then(sub=>{
         if(!review){
-            res.status(404).json("NO subscription found")
+            res.status(404).json("No subscription found")
         }else{
             res.json(sub);
         }
@@ -46,7 +44,6 @@ router.get("/:id",(req,res)=>{
         res.json(err)
     })
 })
-
 
 
 module.exports = router;

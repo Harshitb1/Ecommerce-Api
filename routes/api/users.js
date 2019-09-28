@@ -228,6 +228,13 @@ router.get("/effective-customers", (req, res) => {
 //   });
 // });
 
+router.get("/subscribed-customer",(req,res)=>{
+  User.find({'subscriptions.1': {$exists: true}}).then(found=>{
+    res.json(found)
+  }).catch(err=>{
+    res.json(err)
+  })
+})
 
 ///:start_date/:end_date
 router.get("/datewise/:start_date/:end_date", (req, res) => {
@@ -1248,7 +1255,8 @@ router.get("/:id/refer-time", async (req, res) => {
 // @access  Public
 router.get("/:id", (req, res) => {
   User.findById(req.params.id)
-  .populate("orders")
+  .populate({path:"orders",populate: { path: 'product_id' }})
+  // .populate("")
     .then(user => res.json(user))
     .catch(err =>
       res.status(404).json({ nouserfound: "No user found with that ID" })
